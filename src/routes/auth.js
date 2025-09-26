@@ -86,11 +86,7 @@ router.post("/signup", async (req, res) => {
         };
         const { firstName, lastName, emailId, password, age, gender, photoUrl, about, hobbies } = req.body;
 
-        const hashedPassword = await getHashedPasswrd(password);
-        const userData = { firstName, lastName, emailId, password: hashedPassword, age, gender, photoUrl, about, hobbies };
-
         const userExists = await User.findOne({ emailId });
-
         if (userExists) {
             return res.status(400).json({
                 status: "error",
@@ -98,12 +94,35 @@ router.post("/signup", async (req, res) => {
             })
         };
 
+        const ageNumber = parseInt(age);
+
+        const hashedPassword = await getHashedPasswrd(password);
+        const userData = { firstName, lastName, emailId, password: hashedPassword, age: ageNumber, gender, photoUrl, about, hobbies };
+
         const user = new User(userData);
-        await user.save();
+        const savedUser = await user.save();
+
+        const token = await user?.getJWT();
+
+        res.cookie("token", token, {
+            maxAge: 60 * 60 * 1000
+        });
+
+        const responseData = {
+            firstName: savedUser?.firstName,
+            lastName: savedUser?.lastName,
+            emailId: savedUser?.emailId,
+            age: savedUser?.age,
+            gender: savedUser?.gender,
+            hobbies: savedUser?.hobbies,
+            photoUrl: savedUser?.photoUrl,
+            about: savedUser?.about
+        };
 
         return res.json({
             status: "success",
-            message: messages?.registrationSucceed
+            message: messages?.registrationSucceed,
+            data: responseData
         });
     } catch (err) {
         res.status(500).json({

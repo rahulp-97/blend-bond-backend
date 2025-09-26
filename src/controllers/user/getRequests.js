@@ -22,8 +22,9 @@ const getRequests = async (req, res) => {
         };
 
         const connectionRequests = connectionRequestsArr?.map(requestUser => {
+            const reqId = requestUser?._id?.toString();
             const { _id, firstName, lastName, age, gender, photoUrl, hobbies, about } = requestUser?.fromUserId;
-            return { userId: _id?.toString(), firstName, lastName, age, gender, photoUrl, hobbies, about };
+            return { reqId, userId: _id?.toString(), firstName, lastName, age, gender, photoUrl, hobbies, about };
         });
 
         return res.json({

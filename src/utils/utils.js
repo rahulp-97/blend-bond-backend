@@ -123,7 +123,7 @@ module.exports.validateSignupData = (data) => {
         errors.push("Please enter the strong password. It should contin minimum one capital letter, small letter & numeric character.");
     }
 
-    if (!data?.age || typeof data?.age !== "number" || data?.age < 16 || data?.age > 100) {
+    if (!data?.age || parseInt(data?.age) < 16 || parseInt(data?.age) > 100) {
         errors.push("Age is required.");
     }
 
