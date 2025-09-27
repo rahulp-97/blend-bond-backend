@@ -15,6 +15,7 @@ router.get('/', userAuth, async (req, res) => {
             return res.status(404).json({
                 status: "error",
                 message: errorMessages?.noToken,
+                data: "unauthorized"
             })
         }
         const { user } = req;

@@ -35,6 +35,16 @@ const userSchema = new Schema({
             }
         }
     },
+    isVerified: {
+        type: Boolean,
+        default: false
+    },
+    otp: {
+        type: String
+    },
+    otpExpires: {
+        type: Date
+    },
     age: {
         type: Number,
         required: [true, "Age is required"],

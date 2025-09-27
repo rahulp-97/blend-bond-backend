@@ -8,7 +8,8 @@ const userAuth = async (req, res, next) => {
         if (!req.cookies?.token) {
             return res.status(401).json({
                 status: "error",
-                message: errorMessages?.noToken
+                message: errorMessages?.noToken,
+                data: "unauthorized"
             })
         };
 

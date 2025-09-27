@@ -5,6 +5,15 @@ module.exports.isEmptyObj = (obj) => {
     return obj === undefined || obj === null || Object.keys(obj)?.length === 0;
 };
 
+module.exports.sendEmailValidation = (data) => {
+    const errors = [];
+    if (!data?.toEmailId || typeof data?.toEmailId !== "string" || !/.+@.+\..+/.test(data?.toEmailId)) {
+        errors.push("A valid email ID is required.");
+    }
+
+    return errors;
+}
+
 module.exports.ALLOWED_FIELDS = ["userid", "firstname", "lastname", "age", "gender", "photourl", "about", "hobbies"];
 
 module.exports.validateAllowedFields = (data) => {
@@ -153,4 +162,51 @@ module.exports.validateSignupData = (data) => {
     }
 
     return errors;
+};
+
+module.exports.validateVerifyData = (data) => {
+    const errors = [];
+
+    if (!data?.emailId || typeof data?.emailId !== "string" || !/.+@.+\..+/.test(data?.emailId)) {
+        errors.push("A valid email ID is required.");
+    };
+
+    const trimmedOtp = data?.otp?.trim();
+
+    if(!trimmedOtp || !(trimmedOtp?.length === 6)) {
+        errors.push("Please enter the valid otp");
+    };
+
+    return errors;
+}
+
+// send email template ui:
+module.exports.sendEmailTemplate = (otp) => {
+    return `
+      <div style="
+        max-width:500px;
+        margin:0 auto;
+        font-family:Arial,sans-serif;
+        border:1px solid #ddd;
+        border-radius:8px;
+        overflow:hidden;">
+        <div style="background:black;color:#fff;padding:16px;text-align:center;">
+          <h2 style="margin:0;">Blend bond</h2>
+        </div>
+        <div style="padding:20px;">
+          <p style="font-size:16px;color:#333;">Hi,</p>
+          <p style="font-size:16px;color:#333;">Use the following code to verify your account:</p>
+          <div style="
+            font-size:28px;
+            font-weight:bold;
+            text-align:center;
+            margin:20px 0;
+            letter-spacing:4px;
+            color:#4A90E2;">
+            ${otp}
+          </div>
+          <p style="font-size:14px;color:#666;">This code will expire in 10 minutes.</p>
+          <p style="font-size:14px;color:#666;">Thank you,<br>Blend bond Team</p>
+        </div>
+      </div>`
 };

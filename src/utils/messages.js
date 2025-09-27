@@ -30,7 +30,7 @@ const errorMessages = {
 };
 
 const messages = {
-    registrationSucceed: "User rgistered successfully",
+    registrationSucceed: "You have rgistered yourself successfully, Now please verify your registered email.",
     fetchUsers: "Users fetched successfully",
     deletedUser: "User deleted successfully.",
     updatedUser: "User updated successfully.",
