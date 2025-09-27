@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
                 }
             });
 
-            const emailTemplate = sendEmailTemplate(otp);
+            const emailTemplate = sendEmailTemplate(otp, responseData?.firstName);
 
             const mailOptions = {
                 from: process.env?.NODE_MAILER_GMAIL_SENDER,
@@ -179,7 +179,7 @@ router.post("/signup", async (req, res) => {
             }
         });
 
-        const emailTemplate = sendEmailTemplate(otp);
+        const emailTemplate = sendEmailTemplate(otp, savedUser?.firstName);
 
         const mailOptions = {
             from: process.env?.NODE_MAILER_GMAIL_SENDER,

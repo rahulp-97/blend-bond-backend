@@ -181,7 +181,7 @@ module.exports.validateVerifyData = (data) => {
 }
 
 // send email template ui:
-module.exports.sendEmailTemplate = (otp) => {
+module.exports.sendEmailTemplate = (otp, firstName) => {
     return `
       <div style="
         max-width:500px;
@@ -194,7 +194,7 @@ module.exports.sendEmailTemplate = (otp) => {
           <h2 style="margin:0;">Blend bond</h2>
         </div>
         <div style="padding:20px;">
-          <p style="font-size:16px;color:#333;">Hi,</p>
+          <p style="font-size:16px;color:#333;">Hi, ${firstName ? firstName : ''}</p>
           <p style="font-size:16px;color:#333;">Use the following code to verify your account:</p>
           <div style="
             font-size:28px;
