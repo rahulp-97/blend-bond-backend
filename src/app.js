@@ -28,6 +28,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+// TO-DO: schedule cron jobs- send Emails weekly:
+// require("./utils/cronjobs");
+
 
 app.use(authRouter);
 app.use("/profile", profileRouter);
