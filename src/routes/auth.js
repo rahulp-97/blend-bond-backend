@@ -39,18 +39,6 @@ router.post("/login", async (req, res) => {
             })
         };
 
-        const userData = {
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            emailId: user?.emailId,
-            isVerified: user?.isVerified,
-            age: user?.age,
-            gender: user?.gender,
-            hobbies: user?.hobbies,
-            photoUrl: user?.photoUrl,
-            about: user?.about
-        };
-
         if (!user?.isVerified) {
             const otp = String(randomInt(100000, 1000000));
             user.otp = otp;
@@ -58,6 +46,7 @@ router.post("/login", async (req, res) => {
 
             const savedUser = await user.save();
             const responseData = {
+                _id: user?._id?.toString(),
                 firstName: savedUser?.firstName,
                 lastName: savedUser?.lastName,
                 emailId: savedUser?.emailId,
@@ -97,6 +86,19 @@ router.post("/login", async (req, res) => {
                 verificationStatus: `unverified | ${info?.response}`,
                 data: responseData
             });
+        };
+
+        const userData = {
+            _id: user?._id?.toString(),
+            firstName: user?.firstName,
+            lastName: user?.lastName,
+            emailId: user?.emailId,
+            isVerified: user?.isVerified,
+            age: user?.age,
+            gender: user?.gender,
+            hobbies: user?.hobbies,
+            photoUrl: user?.photoUrl,
+            about: user?.about
         };
         // Handling below logic at userSchema level:
         // const token = await jwt.sign({ id: user?._id }, process.env.JWT_SECRET_KEY, {
@@ -273,6 +275,7 @@ router.post("/verify", async (req, res) => {
         await userExists.save();
 
         const responseData = {
+            _id: userExists?._id?.toString(),
             firstName: userExists?.firstName,
             lastName: userExists?.lastName,
             emailId: userExists?.emailId,

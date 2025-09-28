@@ -1,4 +1,5 @@
 require("dotenv").config();
+const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/connectDB");
@@ -14,8 +15,13 @@ const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const emailRouter = require("./routes/email");
+const initializeSocket = require("./utils/sockets");
+
 
 const app = express();
+const server = http.createServer(app);
+
+initializeSocket(server);
 
 const corsOptions = {
     origin: ["http://localhost:3000", "http://localhost:5173"], // Allowed origins
@@ -79,7 +85,9 @@ app.get("/user/:emailId", async (req, res) => {
 
 
 connectDB().then(() => {
-    app.listen(8000, () => {
-        console.log("server is running on 8000", "http://localhost:8000");
-    });
+    server.listen(8000, () => {
+        console.log("server is running on 8000", "http://localhost:8000")
+    })
+}).catch((err) => {
+    console.log(`Error while connecting to DB: ${err?.error || err?.message}`)
 });
