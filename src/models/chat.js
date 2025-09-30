@@ -10,7 +10,9 @@ const messageSchema = new mongoose.Schema({
         type: String,
         required: [true, "message text is required"],
     }
-})
+}, {
+    timestamps: true
+});
 
 const chatSchema = new mongoose.Schema({
     participants: [

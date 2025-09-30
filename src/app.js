@@ -15,6 +15,7 @@ const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user");
 const emailRouter = require("./routes/email");
+const chatRouter = require("./routes/chat");
 const initializeSocket = require("./utils/sockets");
 
 
@@ -43,6 +44,7 @@ app.use("/profile", profileRouter);
 app.use("/request", requestRouter);
 app.use("/user", userRouter);
 app.use("/email", emailRouter);
+app.use("/chat", chatRouter);
 
 // TO-DO move to suitable router based on frontend functionality:
 
