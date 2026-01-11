@@ -25,10 +25,10 @@ const server = http.createServer(app);
 initializeSocket(server);
 
 const PORT = process.env.PORT || 8000;
+const allowedOrigin = process.env.NODE_ENV === "production" ? process.env.FRONTEND_PROD_URL : [process.env.FRONTEND_DEV_URL1, process.env.FRONTEND_DEV_URL2];
 
 const corsOptions = {
-    origin: "*",
-    // origin: ["http://localhost:3000", "http://localhost:5173"], // Allowed origins
+    origin:  allowedOrigin, // Allowed origins
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow cookies to be sent with requests
 };
