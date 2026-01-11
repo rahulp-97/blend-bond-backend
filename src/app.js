@@ -24,8 +24,11 @@ const server = http.createServer(app);
 
 initializeSocket(server);
 
+const PORT = process.env.PORT || 8000;
+
 const corsOptions = {
-    origin: ["http://localhost:3000", "http://localhost:5173"], // Allowed origins
+    origin: "*",
+    // origin: ["http://localhost:3000", "http://localhost:5173"], // Allowed origins
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"], // Allowed HTTP methods
     credentials: true, // Allow cookies to be sent with requests
 };
@@ -87,8 +90,8 @@ app.get("/user/:emailId", async (req, res) => {
 
 
 connectDB().then(() => {
-    server.listen(8000, () => {
-        console.log("server is running on 8000", "http://localhost:8000")
+    server.listen(PORT, () => {
+        console.log(`server is running on ${PORT}`)
     })
 }).catch((err) => {
     console.log(`Error while connecting to DB: ${err?.error || err?.message}`)

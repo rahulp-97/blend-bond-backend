@@ -125,8 +125,6 @@ router.post("/login", async (req, res) => {
     }
 });
 
-
-
 // POST /signup
 // @public
 router.post("/signup", async (req, res) => {
