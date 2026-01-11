@@ -100,16 +100,14 @@ router.post("/login", async (req, res) => {
             photoUrl: user?.photoUrl,
             about: user?.about
         };
-        // Handling below logic at userSchema level:
-        // const token = await jwt.sign({ id: user?._id }, process.env.JWT_SECRET_KEY, {
-        //     expiresIn: '1h'
-        // });
-
         // this will refer to the current user & so generate it's jwt accordingly.
         const token = await user?.getJWT();
 
         res.cookie("token", token, {
-            maxAge: 60 * 60 * 1000
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         });
 
         return res.json({
@@ -287,7 +285,10 @@ router.post("/verify", async (req, res) => {
 
         const token = await userExists?.getJWT();
         res.cookie("token", token, {
-            maxAge: 60 * 60 * 1000
+            maxAge: 60 * 60 * 1000,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         });
 
 
@@ -310,6 +311,8 @@ router.get("/logout", async (req, res) => {
     try {
         res.cookie("token", null, {
             httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
             expires: new Date(0)
         });
         return res.status(200).json({
