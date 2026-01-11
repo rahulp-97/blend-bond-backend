@@ -9,9 +9,10 @@ function getSecretRoomId({ userId, targetUserId }) {
 };
 
 const initializeSocket = (server) => {
+    const allowedOrigin = process.env.NODE_ENV === "production" ? process.env.FRONTEND_PROD_URL : [process.env.FRONTEND_DEV_URL1, process.env.FRONTEND_DEV_URL2];
     const io = socket(server, {
         cors: {
-            origin: ["http://localhost:3000", "http://localhost:5173"],
+            origin: allowedOrigin,
         }
     });
 
